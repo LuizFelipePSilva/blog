@@ -15,7 +15,7 @@ templateEngineOverride: njk, md
 <ul class="post-list">
 {% for post in grupo.posts %}
 <li>
-<a href="{{ post.url }}">{{ post.data.title }}</a>
+<a href="{{ post.url | url }}">{{ post.data.title }}</a>
 <span class="post-day">
 {{ post.date.toLocaleDateString('pt-BR', { day: 'numeric', timeZone: 'UTC' }) }}
 </span>

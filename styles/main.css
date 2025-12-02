@@ -1,37 +1,54 @@
-/* Definição de Variáveis para facilitar manutenção */
 :root {
-  --bg-body: #111111;
-  --bg-nav: rgba(0, 0, 0, 0.85); /* Navbar com transparência */
-  --bg-code: #1c1c1c;
+  --bg-body: #0a0a0a;
+  --bg-nav: rgba(10, 10, 10, 0.9);
+  --bg-code: #161616;
 
-  --text-main: #e0e0e0;
-  --text-muted: #a0a0a0;
-  --text-heading: #ffffff;
+  --text-heading: #fff;
+  --text-main: #d4d4d4;
+  --text-muted: #737373;
 
-  --accent: #5ab0ff; /* Azul */
-  --accent-hover: #82c5ff;
+  --accent: #fff;
+  --accent-hover: #a3a3a3;
+  --border-color: #262626;
 
   --spacing-layout: 40px;
   --nav-height: 60px;
 }
 
+html[data-theme="light"] {
+  --bg-body: #fafafa;
+  --bg-nav: rgba(250, 250, 250, 0.9);
+  --bg-code: #f0f0f0;
+
+  --text-heading: #111;
+  --text-main: #333;
+  --text-muted: #666;
+
+  --accent: #000;
+  --accent-hover: #555;
+  --border-color: #ddd;
+}
+
 html {
-  scroll-behavior: smooth; /* Rolagem suave ao clicar no TOC */
+  scroll-behavior: smooth;
 }
 
 body {
-  background-color: var(--bg-body);
+  background: var(--bg-body);
   color: var(--text-main);
   margin: 0;
-  /* Stack de fontes moderna e limpa */
-  font-family:
-    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
-    sans-serif;
-  line-height: 1.6; /* Melhor leitura */
+  font-family: system-ui, sans-serif;
+  line-height: 1.7;
   font-size: 16px;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* NAVBAR */
+::selection {
+  background: var(--text-heading);
+  color: var(--bg-body);
+}
+
+/* NAV */
 .navbar {
   position: fixed;
   top: 0;
@@ -39,186 +56,172 @@ body {
   right: 0;
   height: var(--nav-height);
   background: var(--bg-nav);
-  backdrop-filter: blur(10px); /* Efeito de vidro fosco moderno */
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 max(25px, env(safe-area-inset-right)); /* Respeita 'notch' de celulares */
-  border-bottom: 1px solid #333;
+  padding: 0 25px;
+  border-bottom: 1px solid var(--border-color);
   z-index: 100;
 }
 
 .nav-left {
-  font-weight: 700;
+  font-weight: 800;
   font-size: 1.1rem;
   color: var(--text-heading);
   letter-spacing: -0.5px;
+  text-decoration: none;
 }
 
 .nav-right a {
   color: var(--text-muted);
-  margin-left: 20px;
+  margin-left: 25px;
   text-decoration: none;
-  font-size: 0.95rem;
-  transition: color 0.2s ease;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: color 0.2s;
+  text-transform: lowercase;
 }
 
 .nav-right a:hover {
   color: var(--accent);
 }
 
-/* LAYOUT PRINCIPAL */
-.layout {
-  margin-top: calc(var(--nav-height) + 20px);
-  display: grid;
-  /* Grid responsivo: Sidebar fixa 280px, conteúdo ocupa o resto */
-  grid-template-columns: 1fr 280px;
-  gap: var(--spacing-layout);
-  max-width: 1200px;
-  padding: 0 20px 40px;
-  margin-left: auto;
-  margin-right: auto;
+/* Toggle button */
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--text-heading);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition:
+    background 0.2s,
+    color 0.2s;
 }
 
-/* CONTENT styling */
-.content {
-  min-width: 0; /* Impede que código/imagens estourem o grid */
+#theme-toggle:hover {
+  background: var(--accent);
+  color: var(--bg-body);
+}
+
+/* LAYOUT */
+.layout {
+  margin-top: calc(var(--nav-height) + 40px);
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 60px;
+  max-width: 1100px;
+  padding: 0 20px 60px;
+  margin-inline: auto;
 }
 
 .content h1,
 .content h2,
 .content h3 {
   color: var(--text-heading);
-  margin-top: 2em;
-  margin-bottom: 0.75em;
-  line-height: 1.3;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
 }
 
 .content h1 {
   font-size: 2.5rem;
-  margin-top: 0.5em;
+  margin: 0.5em 0;
+  font-weight: 800;
 }
+
+.content h2 {
+  font-size: 1.75rem;
+  margin-top: 2em;
+  padding-bottom: 0.3em;
+}
+
 .content p {
-  margin-bottom: 1.5em;
+  margin-bottom: 1.6em;
 }
+
+/* Links */
 .content a {
   color: var(--accent);
   text-decoration: none;
-  border-bottom: 1px solid transparent;
+  transition: opacity 0.2s;
 }
 .content a:hover {
-  border-bottom-color: var(--accent);
+  opacity: 0.7;
 }
 
-/* Estilo para Code Blocks (Markdown) */
+/* Code */
 .content pre {
   background: var(--bg-code);
-  padding: 1.2rem;
-  border-radius: 8px;
+  padding: 1.5rem;
+  border-radius: 6px;
   overflow-x: auto;
-  border: 1px solid #333;
+  border: 1px solid var(--border-color);
+  font-size: 0.9rem;
 }
 .content code {
-  font-family: "Fira Code", "Consolas", monospace;
-  font-size: 0.9em;
+  font-family: "JetBrains Mono", monospace;
+  background: #222;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
+}
+.content pre code {
+  background: none;
+  padding: 0;
 }
 
-/* SIDEBAR / TOC */
+/* TOC */
 .toc {
   position: sticky;
-  top: calc(var(--nav-height) + 20px);
-  height: fit-content;
-  max-height: calc(100vh - 100px);
+  top: calc(var(--nav-height) + 40px);
+  max-height: calc(100vh - 120px);
   overflow-y: auto;
   padding-left: 20px;
-  border-left: 1px solid #333; /* Linha divisória sutil à esquerda */
+  border-left: 1px solid var(--border-color);
 }
-
 .toc h3 {
-  font-size: 0.85rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   color: var(--text-muted);
-  margin-top: 0;
+  margin: 0 0 1rem 0;
+  font-weight: 600;
 }
-
 .toc ul {
   list-style: none;
   padding: 0;
   margin: 0;
 }
-
 .toc li {
-  margin-bottom: 8px;
+  margin-bottom: 10px;
   line-height: 1.4;
 }
-
-/* Indentação para sub-níveis (h3 dentro do TOC) */
 .toc ul ul {
   padding-left: 15px;
-  margin-top: 5px;
-  border-left: 1px solid #333;
+  margin-top: 8px;
+  border-left: 1px solid var(--border-color);
 }
-
 .toc a {
   color: var(--text-muted);
   text-decoration: none;
   font-size: 0.9rem;
-  transition: all 0.2s;
-  display: block;
+  transition: color 0.2s;
 }
-
 .toc a:hover {
   color: var(--accent);
-  transform: translateX(3px); /* Pequeno movimento ao passar o mouse */
 }
 
-/* RESPONSIVIDADE (Mobile) */
-@media (max-width: 850px) {
-  .layout {
-    grid-template-columns: 1fr; /* Coluna única */
-  }
-
-  .toc {
-    display: none; /* Esconde o TOC lateral em telas pequenas */
-    /* Alternativa: Mover para baixo ou fazer um menu "detalhes" */
-  }
-
-  .content h1 {
-    font-size: 2rem;
-  }
-}
-/* ARQUIVO / HOME */
-.archive {
-  max-width: 800px;
-}
-
-.archive-group {
-  margin-bottom: 3rem;
-}
-
-.archive-date {
-  font-size: 1.2rem;
-  color: var(--accent); /* Aquele azul que definimos antes */
-  border-bottom: 1px solid #333;
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
-  text-transform: capitalize;
-}
-
-.post-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
+/* Archive */
 .post-list li {
   display: flex;
-  justify-content: space-between; /* Título na esq, data na dir */
-  align-items: baseline;
-  padding: 0.5rem 0;
-  border-bottom: 1px dashed #222; /* Linha pontilhada sutil */
+  justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+  transition: transform 0.2s;
+}
+.post-list li:hover {
+  transform: translateX(5px);
 }
 
 .post-list a {
@@ -226,14 +229,28 @@ body {
   font-weight: 500;
   color: var(--text-main);
   text-decoration: none;
+  transition: opacity 0.2s;
 }
-
 .post-list a:hover {
-  color: var(--accent);
+  opacity: 0.7;
 }
 
 .post-day {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--text-muted);
-  font-family: monospace;
+  font-family: "JetBrains Mono", monospace;
+}
+
+/* Mobile */
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+  .toc {
+    display: none;
+  }
+  .content h1 {
+    font-size: 2rem;
+  }
 }

@@ -1,6 +1,7 @@
 ---
 layout: layout.njk
-title: Home
+title: Seja bem vindo
+date: 2025-11-27
 ---
 
-conteúdo.
+Seja bem vindo.

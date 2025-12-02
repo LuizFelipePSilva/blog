@@ -1,0 +1,239 @@
+/* Definição de Variáveis para facilitar manutenção */
+:root {
+  --bg-body: #111111;
+  --bg-nav: rgba(0, 0, 0, 0.85); /* Navbar com transparência */
+  --bg-code: #1c1c1c;
+
+  --text-main: #e0e0e0;
+  --text-muted: #a0a0a0;
+  --text-heading: #ffffff;
+
+  --accent: #5ab0ff; /* Azul */
+  --accent-hover: #82c5ff;
+
+  --spacing-layout: 40px;
+  --nav-height: 60px;
+}
+
+html {
+  scroll-behavior: smooth; /* Rolagem suave ao clicar no TOC */
+}
+
+body {
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  margin: 0;
+  /* Stack de fontes moderna e limpa */
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  line-height: 1.6; /* Melhor leitura */
+  font-size: 16px;
+}
+
+/* NAVBAR */
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: var(--nav-height);
+  background: var(--bg-nav);
+  backdrop-filter: blur(10px); /* Efeito de vidro fosco moderno */
+  -webkit-backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 max(25px, env(safe-area-inset-right)); /* Respeita 'notch' de celulares */
+  border-bottom: 1px solid #333;
+  z-index: 100;
+}
+
+.nav-left {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: var(--text-heading);
+  letter-spacing: -0.5px;
+}
+
+.nav-right a {
+  color: var(--text-muted);
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  transition: color 0.2s ease;
+}
+
+.nav-right a:hover {
+  color: var(--accent);
+}
+
+/* LAYOUT PRINCIPAL */
+.layout {
+  margin-top: calc(var(--nav-height) + 20px);
+  display: grid;
+  /* Grid responsivo: Sidebar fixa 280px, conteúdo ocupa o resto */
+  grid-template-columns: 1fr 280px;
+  gap: var(--spacing-layout);
+  max-width: 1200px;
+  padding: 0 20px 40px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* CONTENT styling */
+.content {
+  min-width: 0; /* Impede que código/imagens estourem o grid */
+}
+
+.content h1,
+.content h2,
+.content h3 {
+  color: var(--text-heading);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  line-height: 1.3;
+}
+
+.content h1 {
+  font-size: 2.5rem;
+  margin-top: 0.5em;
+}
+.content p {
+  margin-bottom: 1.5em;
+}
+.content a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+}
+.content a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* Estilo para Code Blocks (Markdown) */
+.content pre {
+  background: var(--bg-code);
+  padding: 1.2rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  border: 1px solid #333;
+}
+.content code {
+  font-family: "Fira Code", "Consolas", monospace;
+  font-size: 0.9em;
+}
+
+/* SIDEBAR / TOC */
+.toc {
+  position: sticky;
+  top: calc(var(--nav-height) + 20px);
+  height: fit-content;
+  max-height: calc(100vh - 100px);
+  overflow-y: auto;
+  padding-left: 20px;
+  border-left: 1px solid #333; /* Linha divisória sutil à esquerda */
+}
+
+.toc h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-top: 0;
+}
+
+.toc ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.toc li {
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+
+/* Indentação para sub-níveis (h3 dentro do TOC) */
+.toc ul ul {
+  padding-left: 15px;
+  margin-top: 5px;
+  border-left: 1px solid #333;
+}
+
+.toc a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+  display: block;
+}
+
+.toc a:hover {
+  color: var(--accent);
+  transform: translateX(3px); /* Pequeno movimento ao passar o mouse */
+}
+
+/* RESPONSIVIDADE (Mobile) */
+@media (max-width: 850px) {
+  .layout {
+    grid-template-columns: 1fr; /* Coluna única */
+  }
+
+  .toc {
+    display: none; /* Esconde o TOC lateral em telas pequenas */
+    /* Alternativa: Mover para baixo ou fazer um menu "detalhes" */
+  }
+
+  .content h1 {
+    font-size: 2rem;
+  }
+}
+/* ARQUIVO / HOME */
+.archive {
+  max-width: 800px;
+}
+
+.archive-group {
+  margin-bottom: 3rem;
+}
+
+.archive-date {
+  font-size: 1.2rem;
+  color: var(--accent); /* Aquele azul que definimos antes */
+  border-bottom: 1px solid #333;
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  text-transform: capitalize;
+}
+
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-list li {
+  display: flex;
+  justify-content: space-between; /* Título na esq, data na dir */
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px dashed #222; /* Linha pontilhada sutil */
+}
+
+.post-list a {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none;
+}
+
+.post-list a:hover {
+  color: var(--accent);
+}
+
+.post-day {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  font-family: monospace;
+}
